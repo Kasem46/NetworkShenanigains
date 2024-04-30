@@ -47,6 +47,16 @@ public class Node {
         sum = sum/(double)inputs.length;
         
         output = sum + bias;
+        
+        output = activate(output);
+    }
+    
+    public double activate(double input){
+        double out = input;
+        
+        out = 1.0/(1.0+Math.pow(Math.E,-out));
+        
+        return out;
     }
     
     public double getOutput(){
