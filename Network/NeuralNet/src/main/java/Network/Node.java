@@ -28,6 +28,14 @@ public class Node {
         inputNode = true;
     }
     
+    public void setOutput(double output){
+        if(inputNode){
+            this.output=output;
+        }else{
+            System.out.println("do not use this function if the node is not an input node, instead get the output to procces");
+        }
+    }
+    
     public void ajustWeights(int node, double ajustVal){
         //rn just set, later use this value to ajust the current weight for that given node
         weights[node] = ajustVal;
@@ -44,7 +52,6 @@ public class Node {
         for(int i = 0; i < inputs.length;i++){
             sum += inputs[i].getOutput()*weights[i];
         }
-        sum = sum/(double)inputs.length;
         
         output = sum + bias;
         
@@ -53,9 +60,7 @@ public class Node {
     
     public double activate(double input){
         double out = input;
-        
-        out = 1.0/(1.0+Math.pow(Math.E,-out));
-        
+        out = 1.0/(1.0+Math.exp(-out));
         return out;
     }
     

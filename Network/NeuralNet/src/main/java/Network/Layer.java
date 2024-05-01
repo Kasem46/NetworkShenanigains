@@ -34,5 +34,20 @@ public class Layer {
         return nodes;
     }
     
+    public void setInputLayer(double[] inputs){
+        if(inputLayer){
+            for(int i = 0; i < nodes.length;i++){
+                nodes[i].setOutput(inputs[i]);
+            }
+        }
+    }
+    
+    public double[] processLayer(){
+        double[] out = new double[nodes.length];
+        for(int i = 0; i < nodes.length; i++){
+            out[i] = nodes[i].getOutput();
+        }
+        return out;
+    }
     
 }
