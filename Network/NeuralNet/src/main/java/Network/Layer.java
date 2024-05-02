@@ -23,10 +23,10 @@ public class Layer {
     }
     
     //use this constructor when it is the input layer
-    public Layer(double[] inputVals){
-        nodes = new Node[inputVals.length];
+    public Layer(int numInputVals){
+        nodes = new Node[numInputVals];
         for(int i = 0; i < nodes.length; i++){
-            nodes[i] = new Node(inputVals[i]);
+            nodes[i] = new Node(0.0);
         }
     }
     

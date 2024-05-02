@@ -13,13 +13,13 @@ public class Network {
     double[][] trainingDataInputs;
     double[][] trainingDataOutputs;
     
-    public Network(int numLayers,double[] inputVals, int numOutputs,int nodesPerLayer, double[][] expectedValsOut,double[][]expectedValsIn){
+    public Network(int numLayers,int numInputVals, int numOutputs,int nodesPerLayer, double[][] expectedValsOut,double[][]expectedValsIn){
         if(numLayers < 2){
             numLayers = 2;
         }
         
         layers = new Layer[numLayers];
-        layers[0] = new Layer(inputVals);
+        layers[0] = new Layer(numInputVals);
         for(int i = 1; i < layers.length - 1; i++){
             layers[i] = new Layer(nodesPerLayer,layers[i-1]);
         }
@@ -30,7 +30,14 @@ public class Network {
     }
     
     public double[] calculateOutputs(){
+        
         return layers[layers.length - 1].processLayer();
+    }
+    
+    public double[] calculateOutputs(double[] inputData){
+        layers[0].setInputLayer(inputData);
+        
+        return this.calculateOutputs();
     }
     
     //compares the expected value too the actual one and return the squared difference

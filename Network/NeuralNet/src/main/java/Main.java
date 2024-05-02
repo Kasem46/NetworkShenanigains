@@ -8,14 +8,63 @@
  * @author Administrator
  */
 import Network.*;
+import java.util.*;
+import java.io.*;
 public class Main {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic 
-        System.out.println();
+        //set up expected values
+        
+        //files to read from for the inputs and outputs are structed as such
+        //2 lines are each input x and y, and they are order such that this
+        //lines up with the expected output
+        //output of 1,0 means that the point x,y falls under the line
+        //output of 0,1 means that the point x,y falls over the line
+        //the line is the function y= -4(x-0.807)^4 - (x-0.807)^3+4(x-0.807)^2
+        
+        //hard code the input lengths
+        double[][] expectedInputs = new double[26][2];
+        double[][] expectedOuts = new double[26][2];
+        
+        try{
+            Scanner input1 = new Scanner(new File("res//CorrectDataOutputs.txt"));
+            for(int i = 0; i < expectedOuts.length;i++){
+                expectedOuts[i][0] = Double.parseDouble(input1.nextLine());
+                expectedOuts[i][1] = Double.parseDouble(input1.nextLine());
+            }
+            input1.close();
+        }catch(Exception e){
+        
+        }
+        try{
+            Scanner input2 = new Scanner(new File("res//CorrectDataInputs.txt"));
+            for(int i = 0; i < expectedInputs.length;i++){
+                expectedInputs[i][0] = Double.parseDouble(input2.nextLine());
+                expectedInputs[i][1] = Double.parseDouble(input2.nextLine());
+            }
+            input2.close();
+        }catch(Exception e){
+        
+        }
+        
+        Network neuralNet = new Network(3,2,2,3,expectedOuts,expectedInputs);
+        
+        int trainingIterations = 10;
+        
+        for(int i = 0; i < trainingIterations;i++){
+            neuralNet.optimise(0.1);
+        }
+        
+        double[] testPoint = {1.0,1.5};
+        
+        if(neuralNet.calculateOutputs(testPoint)[0] > neuralNet.calculateOutputs(testPoint)[1]){
+            System.out.println("Under the line");
+        }else{
+            System.out.println("Over the line");
+        }
     }
     
 }
