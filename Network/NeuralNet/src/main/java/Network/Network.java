@@ -75,6 +75,21 @@ public class Network {
                         }
                     }
                 }
+                //for each bias
+                double currentCost = this.Cost();
+                double orriginalBias = layers[i].getNodes()[j].getBias();
+                layers[i].getNodes()[j].setBias(orriginalBias + learnRate);
+                double newCost = this.Cost();
+                
+                if(newCost > currentCost){
+                    layers[i].getNodes()[j].setBias(orriginalBias);
+                    layers[i].getNodes()[j].setBias(orriginalBias - learnRate);
+                    newCost = this.Cost();
+                    if(newCost > currentCost){
+                        layers[i].getNodes()[j].setBias(orriginalBias);
+                    }
+                }
+                
             }
         }
         

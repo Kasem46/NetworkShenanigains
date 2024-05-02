@@ -40,12 +40,16 @@ public class Node {
         return weights;
     }
     
+    public double getBias(){
+        return bias;
+    }
+    
     public void ajustWeights(int node, double ajustVal){
         //rn just set, later use this value to ajust the current weight for that given node
         weights[node] = ajustVal;
     }
     
-    public void setBias(int node, double ajustVal){
+    public void setBias(double ajustVal){
         //rn just set, later use this value to ajust the current bias
         bias = ajustVal;
     }
