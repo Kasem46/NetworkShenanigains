@@ -23,7 +23,7 @@ public class Main {
         //lines up with the expected output
         //output of 1,0 means that the point x,y falls under the line
         //output of 0,1 means that the point x,y falls over the line
-        //the line is the function y= -4(x-0.807)^4 - (x-0.807)^3+4(x-0.807)^2
+        //the line is the function y= -4(x-0.807)^4 - (x-0.807)^3+4(x-0.807)^2 + 0.5
         
         //hard code the input lengths
         double[][] expectedInputs = new double[26][2];
@@ -50,21 +50,40 @@ public class Main {
         
         }
         
-        Network neuralNet = new Network(3,2,2,3,expectedOuts,expectedInputs);
+        Network neuralNet = new Network(4,2,2,4,expectedOuts,expectedInputs);
         
-        int trainingIterations = 10;
+        int trainingIterations = 100;
         
         for(int i = 0; i < trainingIterations;i++){
             neuralNet.optimise(0.1);
         }
         
+        Scanner input3 = new Scanner(System.in);
+        String in = "";
         double[] testPoint = {1.0,1.5};
+        while(true){
+            System.out.println("Continue?");
+            in = input3.nextLine();
+            if(in.toLowerCase().equals("yes")){
+            
+                System.out.println("Input x coordanate");
+                in = input3.nextLine();
+                testPoint[0] = Double.parseDouble(in);
+                System.out.println("Input y coordanate");
+                in = input3.nextLine();
+                testPoint[1] = Double.parseDouble(in);
         
-        if(neuralNet.calculateOutputs(testPoint)[0] > neuralNet.calculateOutputs(testPoint)[1]){
-            System.out.println("Under the line");
-        }else{
-            System.out.println("Over the line");
+                if(neuralNet.calculateOutputs(testPoint)[0] > neuralNet.calculateOutputs(testPoint)[1]){
+                    System.out.println("Under the line");
+                }else{
+                    System.out.println("Over the line");
+                }
+            }else{
+                break;
+            }
+        
         }
+        input3.close();
     }
     
 }

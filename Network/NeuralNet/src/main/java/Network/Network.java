@@ -41,6 +41,7 @@ public class Network {
     }
     
     //compares the expected value too the actual one and return the squared difference
+    //NOTE TO SELF: COST FUNCTION BROKEN, ALWAYS RETURNS 0
     public double Cost(){
         double cost = 0;
         

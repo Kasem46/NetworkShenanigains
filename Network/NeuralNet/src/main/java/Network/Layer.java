@@ -20,6 +20,7 @@ public class Layer {
         for(int i = 0; i < nodes.length;i++){
             nodes[i] = new Node(previousLayer.getNodes());
         }
+        inputLayer = false;
     }
     
     //use this constructor when it is the input layer
@@ -28,6 +29,7 @@ public class Layer {
         for(int i = 0; i < nodes.length; i++){
             nodes[i] = new Node(0.0);
         }
+        inputLayer = true;
     }
     
     public Node[] getNodes(){
@@ -39,6 +41,8 @@ public class Layer {
             for(int i = 0; i < nodes.length;i++){
                 nodes[i].setOutput(inputs[i]);
             }
+        }else{
+            System.out.println("improper use of setInputLayer");
         }
     }
     
