@@ -44,19 +44,27 @@ public class Network {
     //NOTE TO SELF: COST FUNCTION BROKEN, ALWAYS RETURNS 0
     public double Cost(){
         double cost = 0;
+        double[] costs = new double[trainingDataOutputs.length];
         
         //determine the cost for each set of training data
         for(int i = 0; i < trainingDataOutputs.length;i++){
             layers[0].setInputLayer(trainingDataInputs[i]);
             double[] outputs = this.calculateOutputs();
-             //for the individual set 
+            double[] costs2 = new double[outputs.length];
+            //for the individual set 
             for(int j = 0; j < outputs.length;j++){
-                cost += (trainingDataOutputs[i][j] - outputs[j]);
+                costs2[j] = Math.abs(trainingDataOutputs[i][j] - outputs[j]);
             }
-            cost /= outputs.length;
+            for(int k = 0; k < costs2.length;k++){
+                costs[i] += costs2[k];
+            }
+            costs[i] /= costs2.length;
+        }
+        for(int i = 0; i < trainingDataOutputs.length;i++){
+            cost += costs[i];
         }
         cost /= trainingDataOutputs.length;
-        return cost;
+        return Math.pow(cost, 2);
     }
     
     public void optimise(double learnRate){
@@ -70,6 +78,7 @@ public class Network {
                     double orriginalWeight = layers[i].getNodes()[j].getWeights()[k];
                     //alter the weight positivly
                     layers[i].getNodes()[j].ajustWeights(k, orriginalWeight + learnRate);
+                    double newWeight = layers[i].getNodes()[j].getWeights()[k];
                     double newCost = this.Cost();
                     //if it is worse go back and try the negitive
                     if(newCost > currentCost){

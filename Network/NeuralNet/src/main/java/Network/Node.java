@@ -19,6 +19,9 @@ public class Node {
     public Node(Node[] inputs){
         this.inputs = inputs;
         this.weights = new double[inputs.length];
+        for(int i = 0; i < weights.length; i++){
+            weights[i] = 1.0;
+        }
         inputNode = false;
     }
     
